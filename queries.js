@@ -1,0 +1,75 @@
+const promise = require('bluebird');
+
+const options = {
+  promiseLib: promise,
+};
+
+const pgp = require('pg-promise')(options);
+
+const connectionString = {
+  host: 'localhost',
+  port: 5432,
+  database: 'recipe_api',
+  user: 'postgres',
+  password: 'password',
+};
+
+const db = pgp(connectionString);
+
+// query functions
+
+function getAllRecipes(req, res, next) {
+  const offset = 0;
+  const limit = 12;
+
+  db.any(`select * from recipes_recipe limit ${limit} offset ${offset}`)
+  // db.any('select * from recipes_recipe')
+    .then((data) => {
+      res.status(200)
+        // .json({
+        //   status: 'success',
+        //   data: data,
+        //   message: 'Retrieved ALL recipes',
+        // });
+        .json(data);
+    })
+    .catch((err) => {
+      return next(err);
+    });
+}
+
+function getRecipes(req, res, next) {
+  const offset = req.query.offset || 0;
+  const limit = 12;
+
+  db.any(`select * from recipes_recipe limit ${limit} offset ${offset}`)
+  .then((data) => {
+    res.status(200)
+      .json(data);
+  })
+  .catch((err) => {
+    console.log('err', err);
+    return next(err);
+  });
+}
+
+function getRecipe(req, res, next) {
+  db.one(`select * from recipes_recipe where id = ${req.params.id}`)
+    .then((data) => {
+      res.status(200)
+       .json({
+         status: 'success',
+         data: data,
+         message: 'Retrieved ONE recipe',
+       });
+    })
+    .catch((err) => {
+      return next(err);
+    });
+}
+
+module.exports = {
+  getAllRecipes: getAllRecipes,
+  getRecipes: getRecipes,
+  getRecipe: getRecipe,
+};
