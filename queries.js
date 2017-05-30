@@ -42,13 +42,33 @@ function getRecipes(req, res, next) {
   const offset = req.query.offset || 0;
   const limit = 12;
 
-  db.any(`select * from recipes_recipe limit ${limit} offset ${offset}`)
+  if (req.query.search) {
+    db.any(`select * from recipes_recipe where title like '%${req.query.search}%' limit ${limit} offset ${offset}`)
+    .then((data) => {
+      res.status(200)
+        .json(data);
+    })
+    .catch((err) => {
+      return next(err);
+    });
+  } else {
+    db.any(`select * from recipes_recipe limit ${limit} offset ${offset}`)
+    .then((data) => {
+      res.status(200)
+        .json(data);
+    })
+    .catch((err) => {
+      return next(err);
+    });
+  }
+}
+
+function searchRecipes(req, res, next) {
+  db.any(`select * from recipes_recipe where title like '%${req.query.search}%'`)
   .then((data) => {
-    res.status(200)
-      .json(data);
+    res.status(200).json(data);
   })
   .catch((err) => {
-    console.log('err', err);
     return next(err);
   });
 }
@@ -72,4 +92,5 @@ module.exports = {
   getAllRecipes: getAllRecipes,
   getRecipes: getRecipes,
   getRecipe: getRecipe,
+  searchRecipes: searchRecipes,
 };

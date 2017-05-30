@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { fetchRecipes } from '../actions';
+import { fetchRecipes, setSearch } from '../actions';
 
 class SearchBar extends Component {
   constructor(props) {
@@ -22,6 +22,7 @@ class SearchBar extends Component {
     event.preventDefault();
 
     this.props.fetchRecipes(this.state.term);
+    this.props.setSearch(this.state.term);
 
     this.setState({
       term: '',
@@ -49,8 +50,12 @@ class SearchBar extends Component {
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchRecipes }, dispatch);
+function mapStateToProps(state) {
+  return { search: state.recipes.search };
 }
 
-export default connect(null, mapDispatchToProps)(SearchBar);
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchRecipes, setSearch }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

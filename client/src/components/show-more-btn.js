@@ -26,7 +26,7 @@ class ShowMoreButton extends Component {
       offset: this.state.offset += 12,
     });
 
-    this.props.fetchMoreRecipes(this.state.offset);
+    this.props.fetchMoreRecipes(this.props.search, this.state.offset);
   }
 
   render() {
@@ -42,8 +42,12 @@ class ShowMoreButton extends Component {
   }
 }
 
+function mapStateToProps(state) {
+  return state.search;
+}
+
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({ fetchMoreRecipes }, dispatch);
 }
 
-export default connect(null, mapDispatchToProps)(ShowMoreButton);
+export default connect(mapStateToProps, mapDispatchToProps)(ShowMoreButton);

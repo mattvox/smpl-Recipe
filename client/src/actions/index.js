@@ -5,9 +5,10 @@ const ROOT_URL = 'http://localhost:3000/api';
 export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const FETCH_MORE_RECIPES = 'FETCH_MORE_RECIPES';
 export const FETCH_RECIPE = 'FETCH_RECIPE';
+export const SET_SEARCH = 'SET_SEARCH';
 
-export function fetchRecipes() {
-  const request = axios.get(`${ROOT_URL}/recipes`);
+export function fetchRecipes(search = '') {
+  const request = axios.get(`${ROOT_URL}/recipes?search=${search}`);
 
   return {
     type: FETCH_RECIPES,
@@ -15,8 +16,8 @@ export function fetchRecipes() {
   };
 }
 
-export function fetchMoreRecipes(offset) {
-  const request = axios.get(`${ROOT_URL}/recipes?offset=${offset}`);
+export function fetchMoreRecipes(search, offset) {
+  const request = axios.get(`${ROOT_URL}/recipes?offset=${offset}&search=${search}`);
 
   return {
     type: FETCH_MORE_RECIPES,
@@ -30,5 +31,12 @@ export function fetchRecipe(id) {
   return {
     type: FETCH_RECIPE,
     payload: request,
+  };
+}
+
+export function setSearch(search) {
+  return {
+    type: SET_SEARCH,
+    payload: search,
   };
 }

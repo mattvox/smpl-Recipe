@@ -5,10 +5,6 @@ import { Link } from 'react-router';
 import { fetchRecipe } from '../actions/index';
 
 class RecipeDetail extends Component {
-  // constructor(props) {
-  //   super(props);
-  // }
-
   componentWillMount() {
     this.props.fetchRecipe(this.props.params.id);
   }
