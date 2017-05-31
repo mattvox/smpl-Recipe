@@ -1,10 +1,9 @@
 import React from 'react';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Card, CardTitle, CardMedia } from 'material-ui/Card';
 
 const divStyle = {
-  marginBottom: '20px',
-  padding: '10px',
-  border: '1px solid gray',
-  textAlign: 'left',
+  marginBottom: '30px',
 };
 
 const imgStyle = {
@@ -14,9 +13,19 @@ const imgStyle = {
 
 const RecipeCard = (props) => {
   return (
+    // <div style={divStyle}>
+    //   <div>{props.title}</div>
+    //   <img src={props.image} style={imgStyle} alt={`img${props.id}`} />
+    // </div>
     <div style={divStyle}>
-      <div>{props.title}</div>
-      <img src={props.image} style={imgStyle} alt={`img${props.id}`} />
+      <MuiThemeProvider>
+        <Card>
+          <CardTitle title={props.title} />
+          <CardMedia>
+            <img src={props.image} style={imgStyle} alt={`img${props.id}`} />
+          </CardMedia>
+        </Card>
+      </MuiThemeProvider>
     </div>
   );
 };
