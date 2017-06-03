@@ -12,15 +12,15 @@ class RecipeDetail extends Component {
   renderIngredients() {
     return this.props.recipe.data.ingredients.map((ingredient) => {
       return (
-        <li>{ingredient}</li>
+        <li key={ingredient}>{ingredient}</li>
       );
     });
   }
 
   renderMethods() {
-    return this.props.recipe.data.methods.map((methods) => {
+    return this.props.recipe.data.methods.map((method) => {
       return (
-        <li>{methods}</li>
+        <li key={method}>{method}</li>
       );
     });
   }
@@ -40,18 +40,14 @@ class RecipeDetail extends Component {
         <img src={recipe.data.image_url} alt={recipe.data.title} />
         <p>Difficulty: {recipe.data.difficulty}</p>
         <p>Servings: {recipe.data.servings}</p>
-        <p>
-          Ingredients:
-          <ul>
-            {this.renderIngredients()}
-          </ul>
-        </p>
-        <p>
-          Methods:
-          <ol>
-            {this.renderMethods()}
-          </ol>
-        </p>
+        <p>Ingredients:</p>
+        <ul>
+          {this.renderIngredients()}
+        </ul>
+        <p>Methods:</p>
+        <ol>
+          {this.renderMethods()}
+        </ol>
       </div>
     );
   }

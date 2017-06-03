@@ -16,7 +16,7 @@ export function fetchRecipes(search = '') {
   };
 }
 
-export function fetchMoreRecipes(search, offset) {
+export function fetchMoreRecipes(search = '', offset = 0) {
   const request = axios.get(`${ROOT_URL}/recipes?offset=${offset}&search=${search}`);
 
   return {

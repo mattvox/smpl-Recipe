@@ -11,7 +11,12 @@ export default function (state = INITIAL_STATE, action) {
 
     case FETCH_MORE_RECIPES:
       recipes = state.recipes.concat(action.payload.data);
-      return { ...state, recipes: recipes };
+      // may not be unique!
+      let clean = { ...state, recipes: recipes };
+      console.log(clean, 'clean');
+      // lazy man's approach
+      // map/filter
+      return clean;
 
     case FETCH_RECIPE:
       return { ...state, activeRecipe: action.payload.data };

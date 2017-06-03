@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Masonry from 'react-masonry-component';
 
-import { fetchRecipes } from '../actions/index';
+import { fetchMoreRecipes } from '../actions/index';
 
 import RecipeCard from './recipe-card';
 
@@ -15,18 +15,19 @@ const containerStyle = {
 const cardStyle = {
   marginLeft: '0px',
   marginRight: '0px',
-  // border: '2px solid',
 };
 
 class Recipes extends Component {
   componentWillMount() {
-    this.props.fetchRecipes();
+    if (this.props.recipes.length == 0) {
+      this.props.fetchMoreRecipes();
+    }
   }
 
   renderRecipes() {
     return this.props.recipes.map((recipe) => {
       return (
-        <div className='col-sm-4' key={recipe.id} style={cardStyle}>
+        <div className='col-sm-3' key={recipe.id} style={cardStyle}>
           <Link to={`recipes/${recipe.id}`}>
             <RecipeCard
               title={recipe.title}
@@ -45,6 +46,7 @@ class Recipes extends Component {
         <Masonry elementType={'div'}>
           {this.renderRecipes()}
         </Masonry>
+        <button>Hi</button>
       </div>
     );
   }
@@ -54,4 +56,4 @@ function mapStateToProps(state) {
   return { recipes: state.recipes.recipes };
 }
 
-export default connect(mapStateToProps, { fetchRecipes })(Recipes);
+export default connect(mapStateToProps, { fetchMoreRecipes })(Recipes);

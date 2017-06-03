@@ -21,19 +21,26 @@ class ShowMoreButton extends Component {
   }
 
   handleClick() {
-    // adds
     this.setState({
       offset: this.state.offset += 12,
     });
 
-    this.props.fetchMoreRecipes(this.props.search, this.state.offset);
+    let recipeCount = this.props.recipes.recipes.length;
+
+
+    this.props.fetchMoreRecipes(this.props.search.search, this.state.offset);
+
+    if ((recipeCount + 12) > this.props.recipes.recipes.length) {
+      console.log(this.props.recipes.recipes.length);
+      console.log("This button should be hidden");
+    }
   }
 
   render() {
     return (
       <div style={style}>
         <div className='col-sm-4'>
-          <button onClick={this.handleClick} className='btn btn-secondary'>
+          <button onClick={this.handleClick} className='{{}} btn btn-secondary'>
             Show More
           </button>
         </div>
@@ -43,7 +50,7 @@ class ShowMoreButton extends Component {
 }
 
 function mapStateToProps(state) {
-  return state.search;
+  return state;
 }
 
 function mapDispatchToProps(dispatch) {
