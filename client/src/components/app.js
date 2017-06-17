@@ -19,9 +19,9 @@ const App = (props) => (
       <SearchBar />
       {props.children}
     </div>
-    <div className='row'>
+    {/* <div className='row'>
       <ShowMoreButton />
-    </div>
+    </div> */}
   </div>
 );
 

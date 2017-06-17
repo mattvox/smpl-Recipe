@@ -6,6 +6,18 @@ const options = {
 
 const pgp = require('pg-promise')(options);
 
+const pg = require('pg');
+const QueryStream = require('pg-query-stream');
+const jsonStream = require('JSONStream');
+
+const config = {
+  host: 'localhost',
+  port: 5432,
+  database: 'recipe_api',
+  user: 'postgres',
+  password: 'password',
+};
+
 const connectionString = {
   host: 'localhost',
   port: 5432,
@@ -15,6 +27,8 @@ const connectionString = {
 };
 
 const db = pgp(connectionString);
+
+const newDB = new pg.Pool(config);
 
 // query functions
 
@@ -37,6 +51,21 @@ function getAllRecipes(req, res, next) {
       return next(err);
     });
 }
+
+// function getRecipes(req, res) {
+//   newDB.connect((err, client, done) => {
+//     if (err) throw err;
+//
+//     const query = new QueryStream(`select * from recipes_recipe where title like '%${req.query.search}%'`);
+//
+//     const stream = client.query(query);
+//
+//     res.set('Content-Type', 'application/json');
+//
+//     stream.on('end', done);
+//     stream.pipe(jsonStream.stringify()).pipe(res.status(200));
+//   });
+// }
 
 function getRecipes(req, res, next) {
   const offset = req.query.offset || 0;

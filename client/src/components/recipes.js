@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import Masonry from 'react-masonry-component';
+// import Masonry from 'react-masonry-component';
+
+import MasonryInfiniteScroller from 'react-masonry-infinite';
 
 import { fetchMoreRecipes } from '../actions/index';
 
@@ -15,11 +17,12 @@ const containerStyle = {
 const cardStyle = {
   marginLeft: '0px',
   marginRight: '0px',
+  width: '200px',
 };
 
 class Recipes extends Component {
-  componentWillMount() {
-    if (this.props.recipes.length == 0) {
+  componentDidMount() {
+    if (this.props.recipes.length === 0) {
       this.props.fetchMoreRecipes();
     }
   }
@@ -27,7 +30,7 @@ class Recipes extends Component {
   renderRecipes() {
     return this.props.recipes.map((recipe) => {
       return (
-        <div className='col-sm-3' key={recipe.id} style={cardStyle}>
+        <div key={recipe.id} style={cardStyle}>
           <Link to={`recipes/${recipe.id}`}>
             <RecipeCard
               title={recipe.title}
@@ -43,10 +46,21 @@ class Recipes extends Component {
   render() {
     return (
       <div className='col-sm-10 col-sm-offset-1' style={containerStyle}>
-        <Masonry elementType={'div'}>
+        {/* <Masonry elementType={'div'}>
           {this.renderRecipes()}
-        </Masonry>
-        <button>Hi</button>
+        </Masonry> */}
+        <MasonryInfiniteScroller
+          hasMore={true}
+          loadMore={() => this.props.fetchMoreRecipes()}
+          useWindow={true}
+          sizes={[
+            { columns: 2, gutter: 10 },
+            { mq: '768px', columns: 3, gutter: 10 },
+            { mq: '1024px', columns: 4, gutter: 10 }
+          ]}
+        >
+          {this.renderRecipes()}
+        </MasonryInfiniteScroller>
       </div>
     );
   }

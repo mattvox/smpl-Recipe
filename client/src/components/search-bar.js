@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { browserHistory } from 'react-router';
+
 import { fetchRecipes, setSearch } from '../actions';
+
 
 class SearchBar extends Component {
   constructor(props) {
@@ -22,6 +25,8 @@ class SearchBar extends Component {
     event.preventDefault();
 
     this.props.fetchRecipes(this.state.term);
+    browserHistory.push(`/?search=${this.state.term}`);
+
     this.props.setSearch(this.state.term);
 
     this.setState({

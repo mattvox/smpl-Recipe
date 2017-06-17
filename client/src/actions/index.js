@@ -16,7 +16,12 @@ export function fetchRecipes(search = '') {
   };
 }
 
-export function fetchMoreRecipes(search = '', offset = 0) {
+let offset = 0;
+
+export function fetchMoreRecipes(search = '') {
+  console.log('called fetchMoreRecipes');
+
+  offset += 12;
   const request = axios.get(`${ROOT_URL}/recipes?offset=${offset}&search=${search}`);
 
   return {
