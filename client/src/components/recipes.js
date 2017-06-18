@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-// import Masonry from 'react-masonry-component';
+import Masonry from 'react-masonry-component';
+import InfiniteScroll from 'react-infinite-scroller';
 
-import MasonryInfiniteScroller from 'react-masonry-infinite';
+// import MasonryInfiniteScroller from 'react-masonry-infinite';
 
 import { fetchMoreRecipes } from '../actions/index';
 
@@ -11,16 +12,17 @@ import RecipeCard from './recipe-card';
 
 const containerStyle = {
   textAlign: 'center',
-  marginTop: '20px',
+  marginTop: '10px',
 };
 
 const cardStyle = {
-  marginLeft: '0px',
-  marginRight: '0px',
-  width: '200px',
+  marginLeft: '10px',
+  marginRight: '10px',
+  width: '220px',
 };
 
 class Recipes extends Component {
+
   componentDidMount() {
     if (this.props.recipes.length === 0) {
       this.props.fetchMoreRecipes();
@@ -44,14 +46,39 @@ class Recipes extends Component {
   }
 
   render() {
+// if isLoading render spinner else do below
+
+  console.log(this.props.recipes.length, 'LENGTH');
+  if (this.props.recipes.length == 0){
+    return <div>loading...</div>;
+  } else {
+
+
     return (
       <div className='col-sm-10 col-sm-offset-1' style={containerStyle}>
-        {/* <Masonry elementType={'div'}>
-          {this.renderRecipes()}
-        </Masonry> */}
-        <MasonryInfiniteScroller
+        <InfiniteScroll
           hasMore={true}
-          loadMore={() => this.props.fetchMoreRecipes()}
+          loadMore={() => {
+            // console.log('do stuff');
+            setTimeout(() => {
+              this.props.fetchMoreRecipes();
+            }, 500);
+          }}
+          loader={<div className='loader'>Loading ...</div>}
+          useWindow={true}
+        >
+          <Masonry elementType={'div'}>
+            {this.renderRecipes()}
+          </Masonry>
+        </InfiniteScroll>
+        {/* <MasonryInfiniteScroller
+          hasMore={true}
+          loadMore={() => {
+            // console.log('do stuff');
+            setTimeout(() => {
+              this.props.fetchMoreRecipes();
+            }, 500);
+          }}
           useWindow={true}
           sizes={[
             { columns: 2, gutter: 10 },
@@ -60,10 +87,11 @@ class Recipes extends Component {
           ]}
         >
           {this.renderRecipes()}
-        </MasonryInfiniteScroller>
+        </MasonryInfiniteScroller> */}
       </div>
     );
   }
+}
 }
 
 function mapStateToProps(state) {
