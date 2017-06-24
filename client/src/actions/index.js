@@ -7,14 +7,21 @@ export const FETCH_MORE_RECIPES = 'FETCH_MORE_RECIPES';
 export const FETCH_RECIPE = 'FETCH_RECIPE';
 export const SET_SEARCH = 'SET_SEARCH';
 
-export function fetchRecipes(search = '') {
-  const request = axios.get(`${ROOT_URL}/recipes?search=${search}`);
+export function fetchRecipes(search = '', callback) {
+  console.log(search, 'srch');
+  const request = axios.get(`${ROOT_URL}/recipes?search=${search}`)
+  .then((response) => {
+    callback();
+    return response;
+  });
 
   return {
     type: FETCH_RECIPES,
     payload: request,
   };
 }
+
+// clean up the way offset is implemented in this action
 
 let offset = 0;
 

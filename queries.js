@@ -14,7 +14,7 @@ const config = {
   host: 'localhost',
   port: 5432,
   database: 'recipe_api',
-  user: 'postgres',
+  user: 'vox',
   password: 'password',
 };
 
@@ -22,7 +22,7 @@ const connectionString = {
   host: 'localhost',
   port: 5432,
   database: 'recipe_api',
-  user: 'postgres',
+  user: 'vox',
   password: 'password',
 };
 

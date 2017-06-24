@@ -47,7 +47,6 @@ class Recipes extends Component {
 
   render() {
 // if isLoading render spinner else do below
-
   console.log(this.props.recipes.length, 'LENGTH');
   if (this.props.recipes.length == 0){
     return <div>loading...</div>;
@@ -59,9 +58,8 @@ class Recipes extends Component {
         <InfiniteScroll
           hasMore={true}
           loadMore={() => {
-            // console.log('do stuff');
             setTimeout(() => {
-              this.props.fetchMoreRecipes();
+              this.props.fetchMoreRecipes(this.props.search);
             }, 500);
           }}
           loader={<div className='loader'>Loading ...</div>}
@@ -71,31 +69,16 @@ class Recipes extends Component {
             {this.renderRecipes()}
           </Masonry>
         </InfiniteScroll>
-        {/* <MasonryInfiniteScroller
-          hasMore={true}
-          loadMore={() => {
-            // console.log('do stuff');
-            setTimeout(() => {
-              this.props.fetchMoreRecipes();
-            }, 500);
-          }}
-          useWindow={true}
-          sizes={[
-            { columns: 2, gutter: 10 },
-            { mq: '768px', columns: 3, gutter: 10 },
-            { mq: '1024px', columns: 4, gutter: 10 }
-          ]}
-        >
-          {this.renderRecipes()}
-        </MasonryInfiniteScroller> */}
       </div>
     );
   }
-}
+  }
 }
 
 function mapStateToProps(state) {
-  return { recipes: state.recipes.recipes };
+  return {
+    recipes: state.recipes.recipes,
+    search: state.search.search };
 }
 
 export default connect(mapStateToProps, { fetchMoreRecipes })(Recipes);
