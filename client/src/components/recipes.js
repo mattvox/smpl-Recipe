@@ -25,7 +25,7 @@ class Recipes extends Component {
 
   componentDidMount() {
     if (this.props.recipes.length === 0) {
-      this.props.fetchMoreRecipes();
+      this.props.fetchMoreRecipes(this.props.location.query.search);
     }
   }
 
@@ -47,31 +47,33 @@ class Recipes extends Component {
 
   render() {
 // if isLoading render spinner else do below
-  console.log(this.props.recipes.length, 'LENGTH');
-  if (this.props.recipes.length == 0){
-    return <div>loading...</div>;
-  } else {
+    console.log(this.props.recipes.length, 'LENGTH');
+    console.log(this.props.location.query.search, 'PROPS QUERY');
 
+    const search = this.props.location.query.search;
 
-    return (
-      <div className='col-sm-10 col-sm-offset-1' style={containerStyle}>
-        <InfiniteScroll
-          hasMore={true}
-          loadMore={() => {
-            setTimeout(() => {
-              this.props.fetchMoreRecipes(this.props.search);
-            }, 500);
-          }}
-          loader={<div className='loader'>Loading ...</div>}
-          useWindow={true}
-        >
-          <Masonry elementType={'div'}>
-            {this.renderRecipes()}
-          </Masonry>
-        </InfiniteScroll>
-      </div>
-    );
-  }
+    if (this.props.recipes.length === 0) {
+      return <div>loading...</div>;
+    } else {
+      return (
+        <div className='col-sm-10 col-sm-offset-1' style={containerStyle}>
+          <InfiniteScroll
+            hasMore
+            loadMore={() => {
+              setTimeout(() => {
+                this.props.fetchMoreRecipes(search);
+              }, 500);
+            }}
+            loader={<div className='loader'>Loading ...</div>}
+            useWindow
+          >
+            <Masonry elementType={'div'}>
+              {this.renderRecipes()}
+            </Masonry>
+          </InfiniteScroll>
+        </div>
+      );
+    }
   }
 }
 
