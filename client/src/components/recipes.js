@@ -22,10 +22,18 @@ const cardStyle = {
 };
 
 class Recipes extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      offset: 0,
+    };
+  }
 
   componentDidMount() {
     if (this.props.recipes.length === 0) {
-      this.props.fetchMoreRecipes(this.props.location.query.search);
+      console.log(this.state, "STATE");
+      this.props.fetchMoreRecipes(this.state.offset, this.props.location.query.search);
     }
   }
 
@@ -47,10 +55,8 @@ class Recipes extends Component {
 
   render() {
 // if isLoading render spinner else do below
-    console.log(this.props.recipes.length, 'LENGTH');
-    console.log(this.props.location.query.search, 'PROPS QUERY');
-
     const search = this.props.location.query.search;
+    this.state.offset += 12;
 
     if (this.props.recipes.length === 0) {
       return <div>loading...</div>;
@@ -61,7 +67,7 @@ class Recipes extends Component {
             hasMore
             loadMore={() => {
               setTimeout(() => {
-                this.props.fetchMoreRecipes(search);
+                this.props.fetchMoreRecipes(this.state.offset, search);
               }, 500);
             }}
             loader={<div className='loader'>Loading ...</div>}

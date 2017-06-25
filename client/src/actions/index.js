@@ -8,7 +8,6 @@ export const FETCH_RECIPE = 'FETCH_RECIPE';
 export const SET_SEARCH = 'SET_SEARCH';
 
 export function fetchRecipes(search = '', callback) {
-  console.log(search, 'srch');
   const request = axios.get(`${ROOT_URL}/recipes?search=${search}`)
   .then((response) => {
     callback();
@@ -23,12 +22,11 @@ export function fetchRecipes(search = '', callback) {
 
 // clean up the way offset is implemented in this action
 
-let offset = 0;
+// let offset = 0;
 
-export function fetchMoreRecipes(search = '') {
-  console.log('called fetchMoreRecipes');
-
-  offset += 12;
+export function fetchMoreRecipes(offset = 0, search = '') {
+  // offset += 12;
+  console.log(offset, 'OFFSET');
   const request = axios.get(`${ROOT_URL}/recipes?offset=${offset}&search=${search}`);
 
   return {
