@@ -32,7 +32,6 @@ class Recipes extends Component {
 
   componentDidMount() {
     if (this.props.recipes.length === 0) {
-      console.log(this.state, "STATE");
       this.props.fetchMoreRecipes(this.state.offset, this.props.location.query.search);
     }
   }
@@ -60,6 +59,7 @@ class Recipes extends Component {
 
     if (this.props.recipes.length === 0) {
       return <div>loading...</div>;
+    // eslint-disable-next-line
     } else {
       return (
         <div className='col-sm-10 col-sm-offset-1' style={containerStyle}>
@@ -86,7 +86,9 @@ class Recipes extends Component {
 function mapStateToProps(state) {
   return {
     recipes: state.recipes.recipes,
-    search: state.search.search };
+    search: state.search.search,
+    offset: state.offset.offset,
+  };
 }
 
 export default connect(mapStateToProps, { fetchMoreRecipes })(Recipes);

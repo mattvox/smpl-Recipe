@@ -6,9 +6,10 @@ export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const FETCH_MORE_RECIPES = 'FETCH_MORE_RECIPES';
 export const FETCH_RECIPE = 'FETCH_RECIPE';
 export const SET_SEARCH = 'SET_SEARCH';
+export const RESET_OFFSET = 'RESET_OFFSET';
 
 export function fetchRecipes(search = '', callback) {
-  const request = axios.get(`${ROOT_URL}/recipes?search=${search}`)
+  const request = axios.get(`${ROOT_URL}/recipes?search=${search}&offset=0`)
   .then((response) => {
     callback();
     return response;
@@ -48,5 +49,12 @@ export function setSearch(search) {
   return {
     type: SET_SEARCH,
     payload: search,
+  };
+}
+
+export function resetOffest() {
+  return {
+    type: RESET_OFFSET,
+    payload: 0,
   };
 }

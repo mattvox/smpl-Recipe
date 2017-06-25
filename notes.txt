@@ -1,0 +1,16 @@
+- move offset into Redux
+  - create actions
+    - increaseOffset (to be used when fetchMoreRecipes is called)
+    - resetOffset (to be used by search bar submit)
+
+- move offset into search object in state (just to clean things up)
+
+- fix problem where state is not cleared when searching for new recipes, either by resetting the recipe state when a new term is searched, or by syncing recipe array length with offset after the search has completed in order to sync up the offset with what is displayed
+
+- create Header component that is sticky and holds logo, nav and search bar
+
+- add Footer with small amount of information
+
+- style the app
+
+- write documentation for both python and node.js parts of the app
