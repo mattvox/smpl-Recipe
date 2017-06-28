@@ -31,7 +31,9 @@ class Recipes extends Component {
 
   componentDidMount() {
     if (this.props.recipes.length === 0) {
-      this.props.fetchMoreRecipes(this.state.offset, this.props.location.query.search);
+      this.props.fetchRecipes(this.props.location.query.search, () => {
+        console.log('done loading');
+      });
     }
   }
 
@@ -43,6 +45,9 @@ class Recipes extends Component {
       if (search !== nextSearch) {
         this.props.fetchRecipes(nextSearch, () => {
           this.props.setSearch(nextSearch);
+          this.setState({
+            offset: nextProps.recipes.length,
+          });
         });
       }
 
@@ -56,27 +61,14 @@ class Recipes extends Component {
         });
       }
     }
-  }
 
-  renderRecipes() {
-    return this.props.recipes.map((recipe) => {
-      return (
-        <div key={recipe.id} style={cardStyle}>
-          <Link to={`recipes/${recipe.id}`}>
-            <RecipeCard
-              title={recipe.title}
-              image={recipe.image_url}
-              id={recipe.id}
-            />
-          </Link>
-        </div>
-      );
+    this.setState({
+      offset: nextProps.recipes.length,
     });
   }
 
   renderMasonry() {
     const search = this.props.location.query.search;
-    this.state.offset += 12;
 
     return (
       <div className='col-sm-10 col-sm-offset-1' style={containerStyle}>
@@ -87,7 +79,7 @@ class Recipes extends Component {
               this.props.fetchMoreRecipes(this.state.offset, search);
             }, 500);
           }}
-          loader={<div className='loader'>Loading ...</div>}
+          loader={<div className='loader'>Loading more recipes...</div>}
           useWindow
         >
           <Masonry elementType={'div'}>
@@ -98,10 +90,27 @@ class Recipes extends Component {
     );
   }
 
+  renderRecipes() {
+    return this.props.recipes.map((recipe, index) => {
+      return (
+        <div key={recipe.id} style={cardStyle}>
+          <Link to={`recipes/${recipe.id}`}>
+            <RecipeCard
+              num={index}
+              title={recipe.title}
+              image={recipe.image_url}
+              id={recipe.id}
+            />
+          </Link>
+        </div>
+      );
+    });
+  }
+
   render() {
 // if isLoading render spinner else do below
     if (this.props.recipes.length === 0) {
-      return <div>loading...</div>;
+      return <div>LOADING...</div>;
     // eslint-disable-next-line
     } else {
       return this.renderMasonry();
