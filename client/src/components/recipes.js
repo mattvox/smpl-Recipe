@@ -25,6 +25,7 @@ class Recipes extends Component {
 
     this.state = {
       offset: 0,
+      hasMore: true,
     };
   }
 
@@ -44,22 +45,18 @@ class Recipes extends Component {
           this.props.setSearch(nextSearch);
         });
       }
+
+      if (this.props.recipes.length === nextProps.recipes.length) {
+        this.setState({
+          hasMore: false,
+        });
+      } else {
+        this.setState({
+          hasMore: true,
+        });
+      }
     }
   }
-
-  // componentDidUpdate() {
-  //   console.log('DID RECEIVE', this.props.location);
-  //   console.log('STATE SEARCH', this.props.search);
-  //   console.log('QUERY STRING', this.props.location.query.search);
-  //
-  //   if (this.props.recipes.length !== 0) {
-  //     if (this.props.location.query.search !== this.props.search) {
-  //       this.props.fetchRecipes(this.props.location.query.search, () => {
-  //         this.props.setSearch(this.props.location.query.search);
-  //       });
-  //     }
-  //   }
-  // }
 
   renderRecipes() {
     return this.props.recipes.map((recipe) => {
@@ -77,33 +74,37 @@ class Recipes extends Component {
     });
   }
 
-  render() {
-// if isLoading render spinner else do below
+  renderMasonry() {
     const search = this.props.location.query.search;
     this.state.offset += 12;
 
+    return (
+      <div className='col-sm-10 col-sm-offset-1' style={containerStyle}>
+        <InfiniteScroll
+          hasMore={this.state.hasMore}
+          loadMore={() => {
+            setTimeout(() => {
+              this.props.fetchMoreRecipes(this.state.offset, search);
+            }, 500);
+          }}
+          loader={<div className='loader'>Loading ...</div>}
+          useWindow
+        >
+          <Masonry elementType={'div'}>
+            {this.renderRecipes()}
+          </Masonry>
+        </InfiniteScroll>
+      </div>
+    );
+  }
+
+  render() {
+// if isLoading render spinner else do below
     if (this.props.recipes.length === 0) {
       return <div>loading...</div>;
     // eslint-disable-next-line
     } else {
-      return (
-        <div className='col-sm-10 col-sm-offset-1' style={containerStyle}>
-          <InfiniteScroll
-            hasMore
-            loadMore={() => {
-              setTimeout(() => {
-                this.props.fetchMoreRecipes(this.state.offset, search);
-              }, 500);
-            }}
-            loader={<div className='loader'>Loading ...</div>}
-            useWindow
-          >
-            <Masonry elementType={'div'}>
-              {this.renderRecipes()}
-            </Masonry>
-          </InfiniteScroll>
-        </div>
-      );
+      return this.renderMasonry();
     }
   }
 }
