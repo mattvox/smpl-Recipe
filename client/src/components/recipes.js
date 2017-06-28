@@ -4,9 +4,7 @@ import { Link } from 'react-router';
 import Masonry from 'react-masonry-component';
 import InfiniteScroll from 'react-infinite-scroller';
 
-// import MasonryInfiniteScroller from 'react-masonry-infinite';
-
-import { fetchMoreRecipes } from '../actions/index';
+import { fetchRecipes, fetchMoreRecipes, setSearch } from '../actions/index';
 
 import RecipeCard from './recipe-card';
 
@@ -35,6 +33,33 @@ class Recipes extends Component {
       this.props.fetchMoreRecipes(this.state.offset, this.props.location.query.search);
     }
   }
+
+  componentWillReceiveProps(nextProps) {
+    const search = this.props.location.query.search;
+    const nextSearch = nextProps.location.query.search;
+
+    if (this.props.recipes.length !== 0) {
+      if (search !== nextSearch) {
+        this.props.fetchRecipes(nextSearch, () => {
+          this.props.setSearch(nextSearch);
+        });
+      }
+    }
+  }
+
+  // componentDidUpdate() {
+  //   console.log('DID RECEIVE', this.props.location);
+  //   console.log('STATE SEARCH', this.props.search);
+  //   console.log('QUERY STRING', this.props.location.query.search);
+  //
+  //   if (this.props.recipes.length !== 0) {
+  //     if (this.props.location.query.search !== this.props.search) {
+  //       this.props.fetchRecipes(this.props.location.query.search, () => {
+  //         this.props.setSearch(this.props.location.query.search);
+  //       });
+  //     }
+  //   }
+  // }
 
   renderRecipes() {
     return this.props.recipes.map((recipe) => {
@@ -91,4 +116,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchMoreRecipes })(Recipes);
+export default connect(mapStateToProps, { fetchRecipes, fetchMoreRecipes, setSearch })(Recipes);

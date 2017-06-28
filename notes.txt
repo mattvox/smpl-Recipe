@@ -2,6 +2,9 @@
   - create actions
     - increaseOffset (to be used when fetchMoreRecipes is called)
     - resetOffset (to be used by search bar submit)
+    - setOffset (to be used when recipes are not re-rendered)
+
+- logic to stop calls to db
 
 - move offset into search object in state (just to clean things up)
 
