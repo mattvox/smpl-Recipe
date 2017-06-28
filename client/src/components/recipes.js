@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Masonry from 'react-masonry-component';
 import InfiniteScroll from 'react-infinite-scroller';
+import Loader from 'halogen/SyncLoader';
 
 import { fetchRecipes, fetchMoreRecipes, setSearch } from '../actions/index';
 
@@ -79,7 +80,7 @@ class Recipes extends Component {
               this.props.fetchMoreRecipes(this.state.offset, search);
             }, 500);
           }}
-          loader={<div className='loader'>Loading more recipes...</div>}
+          loader={<div><Loader color='#333' /></div>}
           useWindow
         >
           <Masonry elementType={'div'}>

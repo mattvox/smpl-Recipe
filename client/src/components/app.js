@@ -1,7 +1,7 @@
 import React from 'react';
 
-import SearchBar from './search-bar';
-import ShowMoreButton from './show-more-btn';
+import Header from './header';
+// import ShowMoreButton from './show-more-btn';
 
 // export default class App extends Component {
 //   render() {
@@ -16,7 +16,7 @@ import ShowMoreButton from './show-more-btn';
 const App = (props) => (
   <div>
     <div className='row'>
-      <SearchBar />
+      <Header />
       {props.children}
     </div>
     {/* <div className='row'>
