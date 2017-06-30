@@ -20,7 +20,6 @@ const RecipeCard = (props) => {
     <div style={divStyle}>
       <MuiThemeProvider>
         <Card>
-          <div>{props.num}</div>
           <CardTitle title={props.title} />
           <CardMedia>
             <img src={props.image} style={imgStyle} alt={`img${props.id}`} />

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory } from 'react-router';
-import { Input } from 'semantic-ui-react';
 
 import { fetchRecipes, setSearch } from '../actions';
 
@@ -37,16 +36,21 @@ class SearchBar extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleFormSubmit} className='input-group'>
-        <Input
-          // action={{ icon: 'search' }}
-          icon='search'
-          size='large'
-          placeholder='Search favorite recipes...'
-          value={this.state.term}
-          onChange={this.handleInputChange}
-        />
-      </form>
+      <div className='col-sm-4 col-sm-offset-4'>
+        <form onSubmit={this.handleFormSubmit} className='input-group'>
+          <input
+            placeholder='Search favorite recipes...'
+            className='form-control'
+            value={this.state.term}
+            onChange={this.handleInputChange}
+          />
+          <span className='input-group-btn'>
+            <button type='submit' className='btn btn-secondary'>
+              Submit
+            </button>
+          </span>
+        </form>
+      </div>
     );
   }
 }

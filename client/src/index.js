@@ -1,3 +1,5 @@
+import 'semantic-ui-css/semantic.min.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
@@ -8,7 +10,8 @@ import promise from 'redux-promise';
 import reducers from './reducers';
 import routes from './routes';
 
-import './index.css';
+// import './index.css';
+
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

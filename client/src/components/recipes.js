@@ -4,20 +4,25 @@ import { Link } from 'react-router';
 import Masonry from 'react-masonry-component';
 import InfiniteScroll from 'react-infinite-scroller';
 import Loader from 'halogen/SyncLoader';
+import { Grid } from 'semantic-ui-react';
 
 import { fetchRecipes, fetchMoreRecipes, setSearch } from '../actions/index';
 
 import RecipeCard from './recipe-card';
 
-const containerStyle = {
-  textAlign: 'center',
-  marginTop: '10px',
+const cardStyle = {
+  marginLeft: '5px',
+  marginRight: '5px',
+  width: '220px',
 };
 
-const cardStyle = {
-  marginLeft: '10px',
-  marginRight: '10px',
-  width: '220px',
+const masonryContainer = {
+  margin: '0 auto',
+};
+
+const masonryOptions = {
+  columnWidth: 250,
+  fitWidth: true,
 };
 
 class Recipes extends Component {
@@ -72,38 +77,46 @@ class Recipes extends Component {
     const search = this.props.location.query.search;
 
     return (
-      <div className='col-sm-10 col-sm-offset-1' style={containerStyle}>
-        <InfiniteScroll
-          hasMore={this.state.hasMore}
-          loadMore={() => {
-            setTimeout(() => {
-              this.props.fetchMoreRecipes(this.state.offset, search);
-            }, 500);
-          }}
-          loader={<div><Loader color='#333' /></div>}
-          useWindow
-        >
-          <Masonry elementType={'div'}>
-            {this.renderRecipes()}
-          </Masonry>
-        </InfiniteScroll>
-      </div>
+      <InfiniteScroll
+        hasMore={this.state.hasMore}
+        loadMore={() => {
+          setTimeout(() => {
+            this.props.fetchMoreRecipes(this.state.offset, search);
+          }, 500);
+        }}
+        loader={<div><Loader color='#333' /></div>}
+        useWindow
+      >
+        <Grid centered>
+          <Grid.Row columns={1}>
+            <Grid.Column width={12}>
+              <Masonry
+                style={masonryContainer}
+                elementType={'div'}
+                options={masonryOptions}
+              >
+                {this.renderRecipes()}
+              </Masonry>
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      </InfiniteScroll>
     );
   }
 
   renderRecipes() {
-    return this.props.recipes.map((recipe, index) => {
+    return this.props.recipes.map((recipe) => {
       return (
         <div key={recipe.id} style={cardStyle}>
           <Link to={`recipes/${recipe.id}`}>
             <RecipeCard
-              num={index}
               title={recipe.title}
               image={recipe.image_url}
               id={recipe.id}
             />
           </Link>
         </div>
+
       );
     });
   }
