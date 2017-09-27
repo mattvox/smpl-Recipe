@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-const ROOT_URL = 'http://localhost:3000/api';
+// const ROOT_URL = 'http://localhost:3000/api';
+const ROOT_URL = '/api';
 
 export const FETCH_RECIPES = 'FETCH_RECIPES';
 export const FETCH_MORE_RECIPES = 'FETCH_MORE_RECIPES';

@@ -10,7 +10,8 @@ const server = express();
 
 server.use(bodyParser.urlencoded({ extended: false }));
 server.use(bodyParser.json());
-server.use(express.static('public'));
+server.use(express.static('client/build'));
+// server.use(express.static('public'));
 
 server.get('/api/recipes', db.getRecipes);
 server.get('/api/recipes/:id', db.getRecipe);
