@@ -38,7 +38,7 @@ class Recipes extends Component {
   componentDidMount() {
     if (this.props.recipes.length === 0) {
       this.props.fetchRecipes(this.props.location.query.search, () => {
-        console.log('done loading');
+        console.log('RECIPES done loading');
       });
     }
   }
