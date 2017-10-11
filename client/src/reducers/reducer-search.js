@@ -1,3 +1,9 @@
+/*
+TODO
+
+- REMOVE THIS!!!
+*/
+
 import { SET_SEARCH } from '../actions/index';
 
 const INITIAL_STATE = { search: '' };

@@ -1,3 +1,9 @@
+/*
+TODO
+
+- Style this and break out individual pieces to separate components
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';

@@ -1,3 +1,9 @@
+/*
+TODO
+
+- REMOVE THIS!!!
+*/
+
 import { RESET_OFFSET } from '../actions/index';
 
 const INITIAL_STATE = { offset: 0 };

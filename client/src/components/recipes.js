@@ -1,3 +1,11 @@
+/*
+TODO
+
+- add Styled components
+- refactor and clean up code, remove console logs, etc
+- refactor Redux state with better, less redundant object names
+*/
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
@@ -36,10 +44,14 @@ class Recipes extends Component {
   }
 
   componentDidMount() {
+    // if (this.props.recipes.length === 0) {
+    //   this.props.fetchRecipes(this.props.location.query.search, () => {
+    //     console.log('RECIPES done loading');
+    //   });
+    // }
+
     if (this.props.recipes.length === 0) {
-      this.props.fetchRecipes(this.props.location.query.search, () => {
-        console.log('RECIPES done loading');
-      });
+      this.props.fetchRecipes(this.props.location.query.search);
     }
   }
 

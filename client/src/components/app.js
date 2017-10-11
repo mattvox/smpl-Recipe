@@ -1,3 +1,16 @@
+/*
+TODO APP-WIDE
+
+- switch from Semantic to Bootstrap?
+- destructure props object on pure components
+- add Styled Components, remove style variables
+- remove old, commented-out code
+
+TODO
+
+- clean all of this up!!! App is just an... app container!
+*/
+
 import React from 'react';
 
 import Header from './header';

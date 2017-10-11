@@ -1,3 +1,9 @@
+/*
+TODO
+
+- break nav bar out into its own component?
+*/
+
 import React from 'react';
 import Headroom from 'react-headroom';
 import { Grid, Menu } from 'semantic-ui-react';
